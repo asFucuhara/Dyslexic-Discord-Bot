@@ -1,0 +1,27 @@
+{
+  "name": "dyslexic",
+  "version": "1.0.0",
+  "description": "Discord bot created of a prank me and my pals used to do in ours discord servers, changing the Nick to a version of users name but wtih letters out of order",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asFucuhara/Dyslexic-Discord-Bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/asFucuhara/Dyslexic-Discord-Bot/issues"
+  },
+  "homepage": "https://github.com/asFucuhara/Dyslexic-Discord-Bot#readme",
+  "dependencies": {
+    "discord.js": "^12.2.0",
+    "express": "^4.17.1",
+    "typescript": "^3.9.5"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.6"
+  }
+}
