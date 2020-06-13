@@ -1,5 +1,6 @@
 export = {
-  TOKEN: 'NzIwMzcyMzY0NTgzMzcwNzcy.XuFQbQ.Y1b3Mhlc6R2TCjHj6StVYIjOoAU',
+  PORT: 5000,
+  DISCORD_TOKEN: 'NTY5OTAyNDM2NTQ2NzcyOTky.XuQ4KA.mDmmWeMNjxDngifkZEJUfabPuZ0',
   PREFIX: '/dys',
 };
 

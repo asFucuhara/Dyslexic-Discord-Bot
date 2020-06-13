@@ -1,7 +1,7 @@
 import { Client, ClientOptions } from 'discord.js';
 import commandList from './commands';
 
-const { TOKEN, PREFIX } = require('../../config/');
+const { DISCORD_TOKEN, PREFIX } = require('../../config/');
 
 const client = new Client({ disableEveryone: true } as ClientOptions);
 
@@ -25,4 +25,4 @@ client.on('message', async (msg) => {
   commandList[command](msg);
 });
 
-client.login(TOKEN);
+client.login(DISCORD_TOKEN);

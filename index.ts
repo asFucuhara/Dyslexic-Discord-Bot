@@ -1,6 +1,8 @@
 import express from 'express';
 import './services/discord';
 
+const { PORT } = require('./config/index');
+
 const app = express();
 
 if (process.env.NODE_ENV === 'production') {
@@ -15,4 +17,4 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-app.listen(5000, () => console.log('listening.......'));
+app.listen(PORT, () => console.log('listening.......'));

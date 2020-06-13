@@ -1,4 +1,5 @@
 export = {
-    TOKEN: process.env.TOKEN,
-    PREFIX: '/dys',
-  };
+  PORT: process.env.PORT,
+  DISCORD_TOKEN: process.env.TOKEN,
+  PREFIX: '/dys',
+};
