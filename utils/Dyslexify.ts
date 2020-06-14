@@ -4,21 +4,25 @@ interface Boundary {
   char: string;
 }
 
-const boundaryDictionary = [' ', '-', '/', '\\', "'", '"', '|', ',', '.', '_'];
-
-//todo separate
-function swapInitials() {}
-
-function swapLetters(word: string, indexes: number[]) {
-  //if inexes.length = 2: swap, else rotation
-  //todo more than 2 indexes
-}
-
 function separateWords(word: string) {
   //separate words by boundaries
   //identify boundaries and groups
   const boundaries = [] as Boundary[];
   const groups = [] as string[];
+
+  //boudary dictionary
+  const boundaryDictionary = [
+    ' ',
+    '-',
+    '/',
+    '\\',
+    "'",
+    '"',
+    '|',
+    ',',
+    '.',
+    '_',
+  ];
 
   //accumulator
   let accumulator = '';
@@ -40,9 +44,72 @@ function separateWords(word: string) {
   return { boundaries, groups };
 }
 
+function unifyWords(boundaries: Boundary[], groups: string[]) {
+  const unified = boundaries.reduce(
+    (acc, boundry, index) => `${acc}${boundry.char}${groups[index + 1]}`,
+    groups[0]
+  );
+  return unified;
+}
+
+function generateRandomIndexes(
+  num: number,
+  max: number,
+  restrain: number[] = []
+) {
+  //Test if can generate al unique
+  if (num + restrain.length > max + 1) {
+    throw new Error('cannot generate unique random number');
+  }
+
+  const randArray = [] as number[];
+
+  const recursiveNewRand = function () {
+    let rand = Math.round(Math.random() * max);
+    if ([...restrain, ...randArray].includes(rand)) {
+      rand = recursiveNewRand();
+    }
+    return rand;
+  };
+
+  for (let i = 0; i < num; i++) {
+    //todo do not repeat
+    randArray.push(recursiveNewRand());
+  }
+  return randArray;
+}
+
+function swapLetters(word: string, toChange: number[]) {
+  //Roll right
+
+  //test to Change
+  const errors = [] as Error[];
+  toChange.forEach((num) => {
+    if (num >= word.length)
+      errors.push(Error('array toChange contains invalid numbers'));
+  });
+
+  if (errors.length) {
+    throw errors;
+  }
+
+  //extract chars from word
+  const extractedLetters = toChange.map((index) => word[index]);
+  const shiftedLetters = [extractedLetters.pop(), ...extractedLetters];
+  const wordSwapped = toChange.reduce(
+    (prev, changing, currentIndex) =>
+      `${prev.substr(0, changing)}${shiftedLetters[currentIndex]}${prev.substr(
+        changing + 1
+      )}`,
+    word
+  );
+
+  return wordSwapped;
+}
+
 function swapMiddle(nickname: string) {
-  //alg1 change any 2 letter of place, in a specific word Separated with( space, dashes, /, underline, boundaries of uppaer and lower case)
-  //letters next to boundarys do not change
+  //alg1 change any 2 char of place, in a specific word Separated with( space, dashes, /, underline, boundaries of uppaer and lower case)
+  //chars next to boundarys do not change
 
   //separate words
   const { boundaries, groups } = separateWords(nickname);
@@ -51,6 +118,8 @@ function swapMiddle(nickname: string) {
   //todo: change number of times executing it
   const dyslexicGroups = groups.map((group) => {
     const { length } = group;
+    const maxIndex = length - 1;
+
     const changeTimes = Math.min(length - 3, 5);
 
     //special case
@@ -58,33 +127,29 @@ function swapMiddle(nickname: string) {
 
     let auxGroup = group;
     for (let i = 0; i <= changeTimes; i++) {
-      //swap any 2 letters that is not near boundaries for each group
-      //rand1/rand2 cannot be 0 nor length - 1, //todo: nor equals
-      const rand1 = Math.round(Math.random() * (length - 3) + 1);
-      const rand2 = Math.round(Math.random() * (length - 3) + 1);
-      const aux = auxGroup[rand1];
-      auxGroup =
-        auxGroup.substr(0, rand1) +
-        auxGroup[rand2] +
-        auxGroup.substr(rand1 + 1);
-      auxGroup = auxGroup.substr(0, rand2) + aux + auxGroup.substr(rand2 + 1);
+      const indexes = generateRandomIndexes(2, maxIndex, [0, maxIndex]);
+      console.log(indexes);
+      auxGroup = swapLetters(auxGroup, indexes);
+      console.log(indexes, auxGroup);
     }
+
     return auxGroup;
   });
 
-  const dyslexyfied = boundaries.reduce(
-    (acc, boundry, index) =>
-      `${acc}${boundry.char}${dyslexicGroups[index + 1]}`,
-    dyslexicGroups[0]
-  );
+  const dyslexyfied = unifyWords(boundaries, dyslexicGroups);
 
   return dyslexyfied;
 }
 
-//todo factory
+//todo separate
+function swapInitials() {}
+
 function createDyslexify(options?: {}) {
   const Dyslexify = { swapMiddle };
   return Dyslexify;
 }
 
+(() => {
+  console.log('aah', generateRandomIndexes(9, 10, [0, 10]));
+})();
 export default createDyslexify;
