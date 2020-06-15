@@ -151,7 +151,7 @@ function createDyslexify(options?: {}) {
   return Dyslexify;
 }
 
-(() => {
-  console.log('aah', generateRandomIndexes(9, 10, [0, 10]));
-})();
+// (() => {
+//   console.log('aah', swapMiddle('abcd654321'));
+// })();
 export default createDyslexify;
