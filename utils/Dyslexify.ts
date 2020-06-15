@@ -114,29 +114,31 @@ function swapMiddle(nickname: string) {
   //separate words
   const { boundaries, groups } = separateWords(nickname);
 
-  //repeat any number of times
-  //todo: change number of times executing it
-  const dyslexicGroups = groups.map((group) => {
+  //execute swap on each group
+  const changedGroups = groups.map((group) => {
     const { length } = group;
     const maxIndex = length - 1;
-
-    const changeTimes = Math.min(length - 3, 5);
 
     //special case
     if (length <= 3) return group;
 
+    //how many times will the group change
+    const changeTimes = Math.min(length - 3, 5);
+
+    //running random changes on group changeTimes times
     let auxGroup = group;
     for (let i = 0; i <= changeTimes; i++) {
+      //todo change fixed value for how many index will be generated
+      //generating unique indexes to change and swapping letters
       const indexes = generateRandomIndexes(2, maxIndex, [0, maxIndex]);
-      console.log(indexes);
       auxGroup = swapLetters(auxGroup, indexes);
-      console.log(indexes, auxGroup);
     }
 
     return auxGroup;
   });
 
-  const dyslexyfied = unifyWords(boundaries, dyslexicGroups);
+  //put groups back together
+  const dyslexyfied = unifyWords(boundaries, changedGroups);
 
   return dyslexyfied;
 }
